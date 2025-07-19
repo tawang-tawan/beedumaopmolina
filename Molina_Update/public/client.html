@@ -1,0 +1,143 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <title>Student Information</title> 
+</head> 
+<body> 
+   
+    <h1 align="center">Student Information Page</h1> 
+   
+  <!-- Insert Form --> 
+  <h2 align="center">Add Student Record</h2> 
+   
+  <table align="center"><form id="insertForm"> 
+    <tr></tr> 
+    <td><label for="studid">Student ID:</label></td> 
+    <td><input type="text" id="studid" name="studid" required></td> </tr> 
+<tr> 
+    <td><label for="lname">Last Name:</label></td> 
+    <td><input type="text" id="lname" name="lname" required></td> </tr> 
+<tr> 
+    <td><label for="fname">First Name:</label></td> 
+    <td><input type="text" id="fname" name="fname" required></td> </tr> 
+<tr> 
+    <td><label for="mname">Middle Name:</label></td> 
+    <td><input type="text" id="mname" name="mname" required></td> </tr> 
+<tr> 
+    <td><label for="course">Course:</label></td> 
+    <td><input type="text" id="course" name="course" required></td> </tr> 
+<tr> 
+    <td colspan="2" align="center"><button type="button" onclick="insertRecord()">Insert Record</button></td> 
+</tr> 
+  </form></table> 
+ 
+<hr height="200px" width="50%" color="green" align="center"> 
+   
+<!-- Search Form --> 
+  <h2 align="center">Search Student Record</h2> 
+   
+  <table align="center"> 
+    <form id="searchForm"> 
+    <tr> 
+    <td><label for="searchStudid">Search by Student ID:</label></td> 
+    <td><input type="text" id="searchStudid" name="studid" required></td> </tr> 
+    <tr> 
+    <td colspan="2" align="center"><button type="button" onclick="searchRecord()">Search Record</button></td> 
+</tr> 
+</form></table> 
+ 
+<hr height="200px" width="50%" color="green" align="center"> 
+ 
+  <!-- Update Form --> 
+  <h2 align="center">Search Result</h2> 
+   
+  <table align="center">  <form id="updateForm"> 
+    <input type="hidden" id="updateStudid" name="studid" required> 
+    <tr> 
+    <td><label for="updateLname">Last Name:</label></td> 
+    <td><input type="text" id="updateLname" name="lname" required></td> 
+    </tr> 
+    <tr> 
+    <td><label for="updateFname">First Name:</label></td> 
+    <td><input type="text" id="updateFname" name="fname" required></td> 
+     
+</tr> 
+<tr> 
+    <td><label for="updateMname">Middle Name:</label></td> 
+    <td><input type="text" id="updateMname" name="mname" required></td> </tr> 
+<tr> 
+    <td><label for="updateCourse">Course:</label></td> 
+    <td><input type="text" id="updateCourse" name="course" required></td> </tr> 
+<tr>     
+<td align="center"><button type="button" onclick="updateRecord()">Update 
+Record</button> 
+    <button type="button" onclick="deleteRecord()">Delete Record</button></td></tr>   </form></table> 
+ 
+    <script> 
+    async function insertRecord() { 
+      const formData = new FormData(document.getElementById('insertForm')); 
+      const data = Object.fromEntries(formData.entries()); 
+ 
+      try { 
+        const response = await fetch('/insert', {           method: 'POST',           headers: { 
+            'Content-Type': 'application/json' 
+          }, 
+          body: JSON.stringify(data), 
+        }); 
+ 
+        const result = await response.json();         alert(result.message); 
+        document.getElementById('insertForm').reset(); 
+      } catch (error) {         console.error('Error inserting record:', error); 
+        alert('An error occurred while inserting the record.'); 
+      } 
+    } 
+ 
+    async function searchRecord() { 
+      const studid = document.getElementById('searchStudid').value; 
+       try { 
+        const response = await fetch(`/search?studid=${studid}`);         const result = await response.json(); 
+ 
+        if (response.ok) { 
+          document.getElementById('updateStudid').value = result.studid;           document.getElementById('updateLname').value = result.lname;           document.getElementById('updateFname').value = result.fname;           document.getElementById('updateMname').value = result.mname; 
+          document.getElementById('updateCourse').value = result.course; 
+        } else { 
+          alert(result.error); 
+        } 
+      } catch (error) {         console.error('Error searching for student:', error); 
+        alert('An error occurred while searching for the student.'); 
+      } 
+    } 
+ 
+    async function updateRecord() { 
+      const formData = new FormData(document.getElementById('updateForm'));       const data = Object.fromEntries(formData.entries()); 
+       try { 
+        const response = await fetch('/update', {           method: 'POST',           headers: { 
+            'Content-Type': 'application/json' 
+          }, 
+          body: JSON.stringify(data), 
+        }); 
+ 
+        const result = await response.json();         alert(result.message); 
+        document.getElementById('updateForm').reset(); 
+      } catch (error) {         console.error('Error updating record:', error); 
+        alert('An error occurred while updating the record.'); 
+      } 
+    } 
+ 
+    async function deleteRecord() { 
+      const formData = new FormData(document.getElementById('updateForm'));       const data = Object.fromEntries(formData.entries()); 
+       try { 
+        const response = await fetch('/delete', {           method: 'POST',           headers: { 
+            'Content-Type': 'application/json' 
+          }, 
+          body: JSON.stringify(data), 
+        }); 
+        const result = await response.json();         alert(result.message); 
+        document.getElementById('updateForm').reset(); 
+      } catch (error) {         console.error('Error deleting record:', error); 
+        alert('An error occurred while deleting the record.'); 
+      } 
+    } 
+  </script> 
+</body> 
+</html> 
