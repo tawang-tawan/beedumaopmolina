@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokémon Plant Care</title>
+    <!-- If you use plain express.static('public') -->
+<link rel="stylesheet" href="/static/cssMain/pokemon.css?v=<%= Date.now() %>">
+
+<!-- If you mounted at /static instead:  /static/cssMain/pokemon.css?v=<%= Date.now() %> -->
+
+
+<!-- If you mounted it at /static -->
+<!-- <link rel="stylesheet" href="/static/css/pokemon.css?v=<%= Date.now() %>"> -->
+</head>
+<body>
+<nav>
+    <h1><img src="https://i.pinimg.com/736x/3c/0d/e3/3c0de384b20a985809b9f9ade61e89fe.jpg" width="32"/> Pokémon Plant Care</h1>
+    <a href="/">Home</a>
+    <a href="/plants">Plants</a>
+    <a href="/plants/add">Add Plant</a>
+</nav>
+<div class="container">

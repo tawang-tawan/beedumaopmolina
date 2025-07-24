@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+<h2>All Plants</h2>
+<div class="plant-list">
+    <% plants.forEach(plant => { %>
+        <div class="plant-card">
+            <img src="<%= plant.image %>" alt="<%= plant.name %>" />
+            <h3><%= plant.name %></h3>
+            <p>Light: <%= plant.light %></p>
+            <p>Water: <%= plant.water %></p>
+            <a href="/plants/<%= plant._id %>/edit" class="btn">Edit</a>
+            <form action="/plants/<%= plant._id %>?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" class="btn danger">Delete</button>
+            </form>
+        </div>
+    <% }) %>
+</div>
+<%- include('partials/footer') %>

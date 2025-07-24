@@ -1,0 +1,10 @@
+<%- include('partials/header') %>
+<h2>Add New Plant</h2>
+<form action="/plants" method="POST">
+    <input type="text" name="name" placeholder="Plant Name" required>
+    <input type="text" name="light" placeholder="Light Requirement" required>
+    <input type="text" name="water" placeholder="Water Frequency" required>
+    <input type="text" name="image" placeholder="Image Path (e.g. /images/pika-succ.png)" required>
+    <button type="submit" class="btn">Add Plant</button>
+</form>
+<%- include('partials/footer') %>
